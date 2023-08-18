@@ -40,7 +40,9 @@ namespace MusicLibraryBackend.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Song songs)
         {
-            return;
+            _context.Songs.Add(songs);
+            _context.SaveChanges();
+            return StatusCode(201, songs);
         }
 
         // PUT api/<SongsController>/5
