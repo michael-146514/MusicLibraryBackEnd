@@ -29,21 +29,14 @@ namespace MusicLibraryBackend.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            var songId = _context.Songs.Where(s => s.Id == id);
-            if(songId == null)
-            {
-                return NotFound();
-            }
-            return Ok(songId);
+         
         }
 
         // POST api/<SongsController>
         [HttpPost]
         public ActionResult Post([FromBody] Song songs)
         {
-            _context.Songs.Add(songs);
-            _context.SaveChanges();
-            return StatusCode(201, songs);
+            return;
         }
 
         // PUT api/<SongsController>/5
