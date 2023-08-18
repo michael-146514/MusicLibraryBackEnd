@@ -19,7 +19,7 @@ namespace MusicLibraryBackend.Controllers
 
         // GET: api/<SongsController>
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get()
         {
             var Songs = _context.Songs.ToList();
             return Ok(Songs);
@@ -27,18 +27,18 @@ namespace MusicLibraryBackend.Controllers
 
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult Get(int id)
         {
-            var songid = _context.Songs.Where(s => s.Id == id);
+            var song = _context.Songs.Where(s => s.Id == id);
 
-            if(songid == null) { return NotFound(); }
+            if(song == null) { return NotFound(); }
 
-            return Ok(songid);
+            return Ok(song);
         }
 
         // POST api/<SongsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Song songs)
+        public IActionResult Post([FromBody] Song songs)
         {
             _context.Songs.Add(songs);
             _context.SaveChanges();
@@ -47,14 +47,38 @@ namespace MusicLibraryBackend.Controllers
 
         // PUT api/<SongsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Song songData)
         {
+            var existingSong = _context.Songs.Find(id);
+            if(existingSong == null)
+            {
+                return NotFound();
+            }
+
+            existingSong.Title = songData.Title;
+            existingSong.Artist = songData.Artist;
+            existingSong.Album = songData.Album;
+            existingSong.ReleaseDate = songData.ReleaseDate;
+            existingSong.Genre = songData.Genre;
+            _context.SaveChanges();
+
+            return Ok(existingSong);
+
         }
 
         // DELETE api/<SongsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var song = _context.Songs.Find(id);
+           if(song == null)
+            {
+                NotFound();
+            }
+            _context.Songs.Remove(song);
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
