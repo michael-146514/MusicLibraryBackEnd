@@ -40,6 +40,9 @@ namespace MusicLibraryBackend.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("SongLikes")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");

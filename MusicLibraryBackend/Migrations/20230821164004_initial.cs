@@ -29,7 +29,8 @@ namespace MusicLibraryBackend.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReleaseDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Genre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SongLikes = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
