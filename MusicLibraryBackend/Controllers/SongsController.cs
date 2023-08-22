@@ -83,6 +83,24 @@ namespace MusicLibraryBackend.Controllers
             return Ok(existingSong);
         }
 
+
+        [HttpPut("{id}/likeRemmove")]
+        public IActionResult LikeSongRemove(int id)
+        {
+            var existingSong = _context.Songs.Find(id);
+
+            if (existingSong == null)
+            {
+                return NotFound();
+            }
+
+            existingSong.SongLikes--;
+
+            _context.SaveChanges();
+
+            return Ok(existingSong);
+        }
+
         // DELETE api/<SongsController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
